@@ -7,7 +7,7 @@ Simple open sourced sound player for Matcha
 Build and start `Matchasoundmodule.exe` first. When the local server is ready, load the client:
 
 ```lua
-local SM = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceOfDeath/SoundModule/refs/heads/main/test.lua"))() or SM
+local SM = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceOfDeath/SoundModule/refs/heads/main/Client.lua"))() or SM
 ```
 
 ## API
