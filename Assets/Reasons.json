@@ -1,0 +1,72 @@
+{
+  "invalid_request": {
+    "message": "Failed to install audio due: request body must be a JSON object",
+    "reason": "Invalid JSON body.",
+    "log": "The /Download request did not contain a JSON object."
+  },
+  "invalid_audio_request": {
+    "message": "Failed to install audio due: Link must be a valid HTTP or HTTPS URL and AudioName must be valid",
+    "reason": "Invalid Link or AudioName.",
+    "log": "Link is absent or does not use HTTP/HTTPS, or AudioName is empty/contains a path."
+  },
+  "file_too_large": {
+    "message": "File size too much for install",
+    "reason": "The file exceeds Maximum audio size.",
+    "log": "Content-Length or streamed byte count exceeded the configured maximum audio size."
+  },
+  "unsupported_audio": {
+    "message": "Unsupported Audio",
+    "reason": "Only WAV, MP3 and OGG are accepted.",
+    "log": "Downloaded bytes do not contain a recognized RIFF/WAVE, ID3/MP3 frame, or OggS signature."
+  },
+  "download_timeout": {
+    "message": "Failed to install audio due: the website did not respond in time",
+    "reason": "Remote site timed out.",
+    "log": "Connection timeout is 5 seconds and download read timeout is 30 seconds."
+  },
+  "download_http_rejected": {
+    "message": "Failed to install audio due: {reason}",
+    "reason": "Remote site rejected the request.",
+    "log": "HTTP request was rejected. The runtime substitutes {reason}; a CF-RAY header marks a Cloudflare block."
+  },
+  "download_connection": {
+    "message": "Failed to install audio due: could not connect to the website",
+    "reason": "Network, DNS, TLS, or server availability issue.",
+    "log": "requests raised ConnectionError before a valid HTTP response was received."
+  },
+  "download_response": {
+    "message": "Failed to install audio due: the website returned an invalid response",
+    "reason": "Remote response could not be downloaded.",
+    "log": "requests raised a RequestException that was not a timeout, HTTP rejection, or connection failure."
+  },
+  "invalid_content_length": {
+    "message": "Failed to install audio due: the website sent an invalid Content-Length header",
+    "reason": "Invalid Content-Length value.",
+    "log": "Content-Length could not be parsed as an integer."
+  },
+  "save_audio": {
+    "message": "Failed to install audio due: the audio file could not be saved in the soundmodule folder",
+    "reason": "File write failed.",
+    "log": "Writing or caching the audio at C:/Matcha/workspace/soundmodule raised OSError."
+  },
+  "convert_audio": {
+    "message": "Failed to install audio due: audio conversion to WAV failed",
+    "reason": "The source could not be decoded as audio.",
+    "log": "libsndfile failed while decoding the accepted WAV, MP3, or OGG source or encoding PCM WAV output."
+  },
+  "audio_not_found": {
+    "message": "Audio not found",
+    "reason": "No matching WAV exists.",
+    "log": "The requested Audioname was not found as C:/Matcha/workspace/soundmodule/<Audioname>.wav."
+  },
+  "play_failed": {
+    "message": "Failed to play AudioFile",
+    "reason": "The audio backend could not play the file.",
+    "log": "Windows winsound failed while playing the WAV file."
+  },
+  "delete_audio": {
+    "message": "Failed to delete AudioFile",
+    "reason": "The WAV file could not be deleted.",
+    "log": "Deleting C:/Matcha/workspace/soundmodule/<AudioName>.wav raised OSError. The cache entry is retained if deletion fails."
+  }
+}
