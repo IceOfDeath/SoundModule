@@ -93,7 +93,6 @@ def initialise_paths() -> bool:
         except (OSError, json.JSONDecodeError):
             pass
     save_config()
-    copy_for_startup()
     apply_autostart()
     return True
 
@@ -114,16 +113,6 @@ def monitor_status_file() -> None:
 
 def save_config() -> None:
     CONFIG_PATH.write_text(json.dumps(config, indent=2), encoding="utf-8")
-
-
-def copy_for_startup() -> None:
-    if getattr(sys, "frozen", False):
-        source = Path(sys.executable)
-        if source.resolve() != CANONICAL_EXE.resolve():
-            try:
-                shutil.copy2(source, CANONICAL_EXE)
-            except OSError:
-                pass
 
 
 def apply_autostart() -> None:
@@ -364,24 +353,25 @@ def hold_single_instance() -> bool:
     return not (handle and ctypes.windll.kernel32.GetLastError() == 183)
 
 
-def relaunch_as_canonical() -> None:
+def launch_workspace_copy() -> None:
     if not getattr(sys, "frozen", False):
         return
     current = Path(sys.executable)
-    if current.name.lower() == "matchasoundmodule.exe":
+    if current.resolve() == CANONICAL_EXE.resolve():
+        return
+    if not ROOT.is_dir() or not WORKSPACE.is_dir():
         return
     try:
-        target = current.with_name("Matchasoundmodule.exe")
-        if not target.exists():
-            shutil.copy2(current, target)
-        os.startfile(str(target))
+        SOUND_DIR.mkdir(exist_ok=True)
+        shutil.copy2(current, CANONICAL_EXE)
+        os.startfile(str(CANONICAL_EXE))
         sys.exit(0)
     except OSError:
         pass
 
 
 def main() -> None:
-    relaunch_as_canonical()
+    launch_workspace_copy()
     if not hold_single_instance():
         return
     if not initialise_paths():
